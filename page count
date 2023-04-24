@@ -8,12 +8,12 @@
       // Store the updated page count in session storage
       sessionStorage.setItem("pageCount", pageCount);
 
-      // Check if the page count is exactly 5
-      if (pageCount == 5) {
+      
         // Push a data layer event with the page count
+       window.dataLayer = window.dataLayer || [];
         dataLayer.push({
           event: "NewPageVisited",
           pageCount: pageCount
         });
-      }
+      
 </script>
