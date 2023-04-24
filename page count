@@ -1,5 +1,5 @@
  <script>
-      // Get the current page count from session storage, or set it to 1 if it doesn't exist yet
+      // Get the current page count from session storage, or set it to 0 if it doesn't exist yet
       var pageCount = parseInt(sessionStorage.getItem("pageCount")) || 0;
 
       // Increment the page count by 1
