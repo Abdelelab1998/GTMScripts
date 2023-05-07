@@ -1,0 +1,17 @@
+<script>
+  (function loadGTM(containerIds) {
+    containerIds.forEach(function(containerId) {
+      var dataLayerName = 'dataLayer_' + containerId.replace(/-/g, '_');
+      window[dataLayerName] = window[dataLayerName] || [];
+      window[dataLayerName].push({
+        'gtm.start': new Date().getTime(),
+        'event': 'gtm.js'
+      });
+      var gtmScript = document.createElement('script');
+      gtmScript.async = true;
+      gtmScript.src = 'https://www.googletagmanager.com/gtm.js?id=' + containerId + '&l=' + dataLayerName;
+      var firstScript = document.getElementsByTagName('script')[0];
+      firstScript.parentNode.insertBefore(gtmScript, firstScript);
+    });
+  })(['GTM-XXXXXX', 'GTM-YYYYYY', 'GTM-ZZZZZZ']);  // Enter your GTM container IDs within the array
+</script>
