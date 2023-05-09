@@ -1,0 +1,24 @@
+// Set the Zapier webhook URL
+var url = 'https://hooks.zapier.com/hooks/catch/xxxx/xxxx/';
+
+// Create an object with the data to transfer
+var payload = {
+  first_name: '',  // Replace with first name
+  last_name: '',   // Replace with last name
+  amount: '',      // Replace with amount
+  email: '',       // Replace with email
+  date: new Date().toLocaleDateString()  // Add current date
+};
+
+// Send the data via a POST request to the webhook URL
+// *** Do not modify this part of the code ***
+fetch(url, {
+  method: 'POST',           // Use the POST method
+  body: JSON.stringify(payload)  // Send the payload as a JSON string
+})
+.then(function(response) {
+  console.log('Success:', response);  // Handle success
+})
+.catch(function(error) {
+  console.error('Error:', error);    // Handle errors
+});
