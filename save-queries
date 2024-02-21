@@ -1,0 +1,23 @@
+<script>
+(function() {
+    // Function to get parameter value from the URL
+    function getParameterValue(parameterName) {
+        var urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(parameterName);
+    }
+
+    // List of UTM parameters to check
+    var utmParameters = [
+        'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+        'utm_source-footer', 'utm_medium-footer', 'utm_campaign-footer', 'utm_content-footer', 'utm_term-footer'
+    ];
+
+    utmParameters.forEach(function(parameter) {
+        var parameterValue = getParameterValue(parameter);
+        if (parameterValue) {
+            // Store the parameter value in sessionStorage with the parameter name as the key
+            sessionStorage.setItem(parameter, parameterValue);
+        }
+    });
+})();
+</script>
