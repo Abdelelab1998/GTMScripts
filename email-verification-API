@@ -1,0 +1,29 @@
+<script>
+// replace with the email address you want to verify
+var email = 'email_address';
+  
+// replace with your own API key from hunter.io  
+var apiKey = 'your API key from hunter.io';
+
+fetch('https://api.hunter.io/v2/email-verifier?email=' + encodeURIComponent(email) + '&api_key=' + encodeURIComponent(apiKey))
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(data) {
+    console.log(data);
+
+    // Push to dataLayer with event name emailStatus and parameters
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'emailStatus',
+      status: data.data ? data.data.status : 'invalid',
+      score: data.data ? data.data.score : null,
+      // Add other parameters from the data
+      // ...
+    });
+  })
+  .catch(function(error) {
+    console.error('Error:', error);
+  });
+
+</script>
