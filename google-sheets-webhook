@@ -1,0 +1,92 @@
+// App script code
+
+function doPost(e) {
+  // Parse the posted data, assuming it is sent as JSON
+  var jsonData = JSON.parse(e.postData.contents);
+
+  // Get the active sheet in your Google Spreadsheet
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+  // Append a new row with the provided data (Sampled data)
+  sheet.appendRow([
+    jsonData.full_name,
+    jsonData.email,
+    jsonData.phone_number,
+    jsonData.reminder_phone_number,
+    jsonData.return_type,
+    jsonData.situation_detail,
+    jsonData.gclid,
+    jsonData.time_zone,
+    jsonData.utm_source,
+    jsonData.utm_medium,
+    jsonData.utm_campaign,
+    new Date().toLocaleDateString()  // Add the current date
+  ]);
+
+  // Create and return a success response with CORS headers
+  return ContentService
+    .createTextOutput(JSON.stringify({ "result": "Success" }))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader("Access-Control-Allow-Origin", "*")  // Allow all origins
+    .setHeader("Access-Control-Allow-Methods", "POST")  // Allow POST method
+    .setHeader("Access-Control-Allow-Headers", "Content-Type");  // Allow Content-Type header
+}
+
+// Front end code (Sample data - You need to adjust that according to your needs)
+
+<script>
+  // Assuming you get these values from your data layer or form
+  var fullName = 'John Doe'; // replace with actual value
+  var email = 'Test'; // replace with actual value
+  var phoneNumber = '000 000 000'; // replace with actual value
+  var reminderPhoneNumber = '000 000 000'; // replace with actual value
+  var returnType = 'Test'; // replace with actual value
+  var situationDetail = 'Test'; // replace with actual value
+  var gclid = 'Test'; // replace with actual value
+  var timeZone = 'Test'; // replace with actual value
+  var utmSource = 'Test'; // replace with actual value
+  var utmMedium = 'Test'; // replace with actual value
+  var utmCampaign = 'Test'; // replace with actual value
+
+  // Function to remove '+' sign from phone numbers
+  function removePlusSign(number) {
+    return number ? number.replace(/^\+/, '') : '';
+  }
+
+  var formattedPhoneNumber = removePlusSign(phoneNumber);
+  var formattedReminderPhoneNumber = removePlusSign(reminderPhoneNumber);
+
+  // Update payload with formatted phone numbers
+  var payload = {
+    full_name: String(fullName || ''),
+    email: String(email || ''),
+    phone_number: formattedPhoneNumber,
+    reminder_phone_number: formattedReminderPhoneNumber,
+    return_type: String(returnType || ''),
+    situation_detail: String(situationDetail || ''),
+    gclid: String(gclid || ''),
+    time_zone: String(timeZone || ''),
+    utm_source: String(utmSource || ''),
+    utm_medium: String(utmMedium || ''),
+    utm_campaign: String(utmCampaign || ''),
+    date: new Date().toLocaleDateString()
+  };
+
+  fetch('https://script.google.com/macros/s/{deployment ID}/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(result) {
+    console.log(result);
+  })
+  .catch(function(error) {
+    console.error('Error:', error);
+  });
+</script>
