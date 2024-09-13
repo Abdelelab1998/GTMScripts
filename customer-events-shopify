@@ -5,10 +5,18 @@ function gtag(){dataLayer.push(arguments);}
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-XXXXXX);
+})(window,document,'script','dataLayer','GTM-XXXXXX');
 
 analytics.subscribe("checkout_completed", (event) => {
   dataLayer.push({ ecommerce: null });
+  const userEmail = event.data?.checkout?.email;
+  const userPhone = event.data?.checkout?.phone;
+  const billingCountry = event.data?.checkout?.billingAddress?.country;
+  const billingCity = event.data?.checkout?.billingAddress?.city;
+  const billingProvince = event.data?.checkout?.billingAddress?.provinceCode;
+  const billingZipCode =  event.data?.checkout?.billingAddress?.zip;
+  const userFirstName =  event.data?.checkout?.billingAddress?.firstName;
+  const userLastName = event.data?.checkout?.billingAddress?.lastName;
   const items = event.data?.checkout?.lineItems?.map((item) => {
     return {
       item_id: item.variant.product.id,
@@ -20,6 +28,17 @@ analytics.subscribe("checkout_completed", (event) => {
   dataLayer.push({
     event: "purchase",
     url: event.context.document.location.href,
+    event_id: event.id,
+    userData: {
+     email: userEmail,
+     phoneNumber: userPhone,
+     country: billingCountry,
+     city:  billingCity,
+     province: billingProvince,
+     firstName:  userFirstName,
+     lastName: userLastName,
+     zipCode: billingZipCode 
+    },
     ecommerce: {
       currency: event.data?.checkout?.currencyCode,
       value: event.data?.checkout?.subtotalPrice?.amount,
@@ -34,6 +53,14 @@ analytics.subscribe("checkout_completed", (event) => {
 
 analytics.subscribe("payment_info_submitted", (event) => {
   dataLayer.push({ ecommerce: null });
+  const userEmail = event.data?.checkout?.email;
+  const userPhone = event.data?.checkout?.phone;
+  const billingCountry = event.data?.checkout?.billingAddress?.country;
+  const billingProvince = event.data?.checkout?.billingAddress?.provinceCode;
+  const billingCity = event.data?.checkout?.billingAddress?.city;
+  const billingZipCode =  event.data?.checkout?.billingAddress?.zip;
+  const userFirstName =  event.data?.checkout?.billingAddress?.firstName;
+  const userLastName = event.data?.checkout?.billingAddress?.lastName;
   const items = event.data?.checkout?.lineItems?.map((item) => {
     return {
       item_id: item.variant.product.id,
@@ -44,7 +71,18 @@ analytics.subscribe("payment_info_submitted", (event) => {
   });
   dataLayer.push({
     event: "add_payment_info",
+    event_id: event.id,
     url: event.context.document.location.href,
+    userData: {
+     email: userEmail,
+     phoneNumber: userPhone,
+     country: billingCountry,
+     city:  billingCity,
+     province: billingProvince,
+     firstName:  userFirstName,
+     lastName: userLastName,
+     zipCode: billingZipCode 
+    },
     ecommerce: {
       currency: event.data?.checkout?.currencyCode,
       value: event.data?.checkout?.subtotalPrice?.amount,
@@ -55,6 +93,14 @@ analytics.subscribe("payment_info_submitted", (event) => {
 
 analytics.subscribe("checkout_shipping_info_submitted", (event) => {
   dataLayer.push({ ecommerce: null });
+  const userEmail = event.data?.checkout?.email;
+  const userPhone = event.data?.checkout?.phone;
+  const billingCountry = event.data?.checkout?.billingAddress?.country;
+  const billingProvince = event.data?.checkout?.billingAddress?.provinceCode;
+  const billingCity = event.data?.checkout?.billingAddress?.city;
+  const billingZipCode =  event.data?.checkout?.billingAddress?.zip;
+  const userFirstName =  event.data?.checkout?.billingAddress?.firstName;
+  const userLastName = event.data?.checkout?.billingAddress?.lastName;
   const items = event.data?.checkout?.lineItems?.map((item) => {
     return {
       item_id: item.variant.product.id,
@@ -65,7 +111,18 @@ analytics.subscribe("checkout_shipping_info_submitted", (event) => {
   });
   dataLayer.push({
     event: "add_shipping_info",
+    event_id: event.id,
     url: event.context.document.location.href,
+    userData: {
+     email: userEmail,
+     phoneNumber: userPhone,
+     country: billingCountry,
+     city:  billingCity,
+     province: billingProvince,
+     firstName:  userFirstName,
+     lastName: userLastName,
+     zipCode: billingZipCode 
+    },
     ecommerce: {
       currency: event.data?.checkout?.currencyCode,
       value: event.data?.checkout?.subtotalPrice?.amount,
@@ -76,6 +133,8 @@ analytics.subscribe("checkout_shipping_info_submitted", (event) => {
 
 analytics.subscribe("checkout_started", (event) => {
   dataLayer.push({ ecommerce: null });
+  const billingCountry = event.data?.checkout?.billingAddress?.country;
+  const billingProvince = event.data?.checkout?.billingAddress?.provinceCode;
   const items = event.data?.checkout?.lineItems?.map((item) => {
     return {
       item_id: item.variant.product.id,
@@ -86,6 +145,11 @@ analytics.subscribe("checkout_started", (event) => {
   });
   dataLayer.push({
     event: "begin_checkout",
+    event_id: event.id,
+    userData: {
+     country: billingCountry,
+     province: billingProvince,
+    },
     url: event.context.document.location.href,
     ecommerce: {
       currency: event.data?.checkout?.currencyCode,
@@ -107,6 +171,7 @@ analytics.subscribe("cart_viewed", (event) => {
   });
   dataLayer.push({
     event: "view_cart",
+    event_id: event.id,
     url: event.context.document.location.href,
     ecommerce: {
       currency: event.data?.cart?.cost?.totalAmount?.currencyCode,
@@ -120,6 +185,7 @@ analytics.subscribe("product_added_to_cart", (event) => {
   dataLayer.push({ ecommerce: null });
   dataLayer.push({
     event: "add_to_cart",
+    event_id: event.id,
     url: event.context.document.location.href,
     ecommerce: {
       currency: event.data?.cartLine?.cost?.totalAmount?.currencyCode,
@@ -140,6 +206,7 @@ analytics.subscribe("product_viewed", (event) => {
   dataLayer.push({ ecommerce: null });
   dataLayer.push({
     event: "view_item",
+    event_id: event.id,
     url: event.context.document.location.href,
     ecommerce: {
       currency: event.data?.productVariant?.price?.currencyCode,
@@ -158,7 +225,8 @@ analytics.subscribe("product_viewed", (event) => {
 
 analytics.subscribe("page_viewed", (event) => {
   window.dataLayer.push({
-    event: "shopify_page_view",
+    event: "page_view",
+    event_id: event.id,
     url: event.context.document.location.href
   });
 });
