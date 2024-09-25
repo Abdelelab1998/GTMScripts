@@ -1,0 +1,17 @@
+// Add the following script to your Shopify theme file (before the closing </body> tag)
+<script>
+  window.addEventListener('message', function(event){
+    if(event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmit') {
+      Shopify.analytics.publish('hubspotFormSubmit', {data: event.data.data});
+    }
+  });
+</script>
+
+// Handle hubspotFormSubmit event
+
+analytics.subscribe("hubspotFormSubmit", (event) => {
+  window.dataLayer.push({
+    'event': 'hubspotFormSubmit',
+    'data': event.data,
+  });
+});
