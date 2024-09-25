@@ -1,4 +1,4 @@
-// Add the following script to your Shopify theme file (before the closing </body> tag)
+// Add the following script to your Shopify theme.liquid file (before the closing </body> tag)
 <script>
   window.addEventListener('message', function(event){
     if(event.data.type === 'hsFormCallback' && event.data.eventName === 'onFormSubmit') {
