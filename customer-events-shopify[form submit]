@@ -16,13 +16,6 @@ analytics.subscribe("form_submitted", (event) => {
     const [email] = element.elements
     .filter((item) => emailRegex.test(item.id) || emailRegex.test(item.name))
     .map((item) => item.value);
-    const formDetails = event.data.element.elements.map((item) => {
-    return {
-      id: item.id,
-      name: item.name,
-      value: item.value,
-    };
-  });
   
   window.dataLayer.push({
    'event': event.name,
