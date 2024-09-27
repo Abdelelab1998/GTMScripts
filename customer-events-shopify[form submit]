@@ -12,6 +12,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 analytics.subscribe("form_submitted", (event) => {
     const element = event.data.element;
     const elementId = element.id;
+    const emailRegex = /email/i;
+    const [email] = element.elements
+    .filter((item) => emailRegex.test(item.id) || emailRegex.test(item.name))
+    .map((item) => item.value);
     const formDetails = event.data.element.elements.map((item) => {
     return {
       id: item.id,
@@ -23,9 +27,8 @@ analytics.subscribe("form_submitted", (event) => {
   window.dataLayer.push({
    'event': event.name,
    'formId': elementId,
-   'formDetails': formDetails,     
-   'userId': event.clientId,
-   'eventId': event.id
+   'email': email,
+    
   });
 });
 
