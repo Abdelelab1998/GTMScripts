@@ -1,0 +1,32 @@
+// Step 1. Initialize the JavaScript pixel SDK (make sure to exclude HTML)
+
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-XXXXXXX');
+
+// Step 2. Subscribe to customer events with analytics.subscribe(), and add tracking
+
+
+analytics.subscribe("form_submitted", (event) => {
+    const element = event.data.element;
+    const elementId = element.id;
+    const formDetails = event.data.element.elements.map((item) => {
+    return {
+      id: item.id,
+      name: item.name,
+      value: item.value,
+    };
+  });
+  
+  window.dataLayer.push({
+   'event': event.name,
+   'formId': elementId,
+   'formDetails': formDetails,     
+   'userId': event.clientId,
+   'eventId': event.id
+  });
+});
+
+
