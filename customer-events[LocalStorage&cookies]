@@ -1,0 +1,28 @@
+// Step 1. Initialize the JavaScript pixel SDK (make sure to exclude HTML)
+
+
+// Load the JS Library of your choice
+
+
+// Step 2. Subscribe to customer events with analytics.subscribe(), and add tracking
+analytics.subscribe("page_viewed", async (event) => {   
+  const testLocalStorage = await browser.localStorage.getItem('test');
+  const testSessionStorage = await browser.sessionStorage.getItem('webPixelDebug'); 
+  const testCookie = await browser.cookie.get('_cmp_a');  
+
+  // Push to dataLayer
+  window.dataLayer.push({
+    'event': event.name,
+    'testSessionStorage': testSessionStorage,
+    'testCookie': testCookie,
+    'testLocalStorage': testLocalStorage 
+  });
+
+  // Log the data that was pushed to dataLayer
+  console.log({
+    event: event.name,
+    testLocalStorage: testLocalStorage,
+    testSessionStorage: testSessionStorage,
+    testCookie: testCookie
+  });
+});
