@@ -1,0 +1,47 @@
+// go to apps > quotify > settings > customization > custom javascript and paste the below code with no script tags
+
+function pushToTopWindow(event) {
+    let currentWindow = window;
+    const eventData = {
+        eventType: event.type,
+        eventDetails: event.detail 
+    };
+
+    // Keep going up the iframe hierarchy until we reach the top window
+    while (currentWindow !== currentWindow.top) {
+        currentWindow = currentWindow.parent;
+    }
+
+    // Post message to the top window
+    currentWindow.postMessage(eventData, '*');
+}
+
+// Listen for both events and trigger the push to top window
+window.addEventListener('quotify:submitted', pushToTopWindow);
+window.addEventListener('quotify:opened', pushToTopWindow);
+
+
+
+
+// on google tag manager add this code 
+
+function pushToTopWindow(event) {
+    let currentWindow = window;
+    const eventData = {
+        eventType: event.type,
+        eventDetails: event.detail 
+    };
+
+    // Keep going up the iframe hierarchy until we reach the top window
+    while (currentWindow !== currentWindow.top) {
+        currentWindow = currentWindow.parent;
+    }
+
+    // Post message to the top window
+    currentWindow.postMessage(eventData, '*');
+}
+
+// Listen for both events and trigger the push to top window
+window.addEventListener('quotify:submitted', pushToTopWindow);
+window.addEventListener('quotify:opened', pushToTopWindow);
+
