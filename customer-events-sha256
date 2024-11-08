@@ -1,0 +1,22 @@
+/**
+ * Asynchronous function to compute a SHA-256 hash of a given input string.
+ * 
+ * How it works:
+ * 1. Converts the input string into a byte array using TextEncoder.
+ * 2. Uses the Web Crypto API to perform SHA-256 hashing.
+ * 3. Converts the resulting hash (ArrayBuffer) into an array of bytes.
+ * 4. Maps each byte to its hexadecimal representation and joins them into a single string.
+ */
+
+async function sha256(i) {
+    const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(i));
+    return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Example usage inside a subscription handler
+analytics.subscribe("page_viewed", async (event) => {
+    const exampleEmail = await sha256('test@test.com'); // Compute hash for 'test'
+    const examplePhoneNumber = await sha256('4356754563'); // Compute hash for 'test'
+// Add your logic here
+    console.log(exampleEmail, examplePhoneNumber); 
+});
